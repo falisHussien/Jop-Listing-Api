@@ -1,14 +1,14 @@
 import React from 'react';
-import image from "../assets/img.webp"
+import { useInView } from 'react-intersection-observer';
+
 const FeaturedJobs = () => {
-  // Static data for featured jobs
   const jobs = [
     {
       title: 'Software Developer',
       company: 'TechCorp',
       location: 'Remote',
       description: 'Develop and maintain web applications, optimize code for speed and scalability, and collaborate with cross-functional teams.',
-     image: "https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600"
+      image: 'https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg?auto=compress&cs=tinysrgb&w=600',
     },
     {
       title: 'Hardware Engineer',
@@ -48,25 +48,48 @@ const FeaturedJobs = () => {
   ];
 
   return (
-    <section className="py-16 bg-gray-100">
+    <section className="py-16 bg-gradient-to-b from-gray-100 to-gray-200">
       <div className="container mx-auto text-center">
-        <h2 className="text-3xl font-semibold text-gray-800 mb-8">Featured Jobs</h2>
+        <h2 className="text-3xl font-semibold text-indigo-800 mb-8">Featured Jobs</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          {jobs.map((job, index) => (
-            <div key={index} className="bg-white p-6 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300">
-              <div className="mb-4">
-                {/* Display image if available */}
-                <img src={job.image} alt={job.title} className="w-full h-48 object-cover rounded-lg" />
+          {jobs.map((job, index) => {
+            const [ref, inView] = useInView({
+              triggerOnce: true,
+              threshold: 0.1,
+            });
+
+            return (
+              <div
+                ref={ref}
+                key={index}
+                className={`bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-500 ease-out ${
+                  inView
+                    ? 'transform scale-100 opacity-100 translate-y-0'
+                    : 'transform scale-95 opacity-0 translate-y-10'
+                } ${index % 2 === 0 ? 'bg-gradient-to-r from-white to-gray-50' : ''}`}
+                style={{ transitionDelay: `${index * 0.15}s` }}
+              >
+                <div className="mb-4">
+                  <img
+                    src={job.image}
+                    alt={job.title}
+                    className="w-full h-48 object-cover rounded-lg transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <h3 className="text-2xl font-semibold text-indigo-700 transition-colors duration-300 hover:text-indigo-600">
+                  {job.title}
+                </h3>
+                <p className="text-lg text-indigo-500 transition-colors duration-300 hover:text-indigo-400">
+                  {job.company}
+                </p>
+                <p className="text-sm text-gray-500">{job.location}</p>
+                <p className="mt-4 text-gray-700">{job.description.substring(0, 100)}...</p>
+                <button className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                  View Details
+                </button>
               </div>
-              <h3 className="text-2xl font-semibold text-gray-800">{job.title}</h3>
-              <p className="text-lg text-gray-500">{job.company}</p>
-              <p className="text-sm text-gray-400">{job.location}</p>
-              <p className="mt-4 text-gray-700">{job.description.substring(0, 100)}...</p>
-              <button className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
-                View Details
-              </button>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>

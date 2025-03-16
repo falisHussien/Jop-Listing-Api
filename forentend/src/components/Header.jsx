@@ -1,13 +1,14 @@
 // src/components/Header.jsx
 import React from "react";
 import { Link } from "react-router-dom";
+import jop from "../assets/joop.png"
 
 const Header = () => {
   return (
     <header className="bg-white shadow-md py-4 px-8 flex justify-between items-center">
       {/* Logo and Company Name */}
       <div className="flex items-center gap-3">
-        <img src="/logo.png" alt="Company Logo" className="w-12 h-12" />
+        <img src={jop} alt="Company Logo" className="w-14 " />
         <h1 className="text-xl font-bold text-indigo-600">JobFinder</h1>
       </div>
       

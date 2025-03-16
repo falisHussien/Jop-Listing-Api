@@ -20,7 +20,7 @@ const JobList = () => {
 
             <section className="p-8">
                 <h2 className="text-4xl font-bold text-center animate__animated animate__fadeIn animate__delay-3s">Available Jobs</h2>
-                <ul className="space-y-6 max-w-3xl mx-auto">
+                <ul className="space-y-6 max-w-3xl mx-auto ">
                     {jobs.map(job => (
                         <li key={job.id} className="bg-white text-gray-800 p-6 rounded-lg shadow-lg border border-gray-200">
                             <h3 className="text-2xl font-semibold text-blue-600 mb-2">{job.title}</h3>
