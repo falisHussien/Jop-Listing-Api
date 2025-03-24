@@ -1,5 +1,6 @@
 import React from 'react';
 import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
 
 const FeaturedJobs = () => {
   const jobs = [
@@ -84,9 +85,9 @@ const FeaturedJobs = () => {
                 </p>
                 <p className="text-sm text-gray-500">{job.location}</p>
                 <p className="mt-4 text-gray-700">{job.description.substring(0, 100)}...</p>
-                <button className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
-                  View Details
-                </button>
+                <Link to="/apply"> <button className="mt-6 bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700 transition duration-300">
+                Apply Now
+                </button> </Link>
               </div>
             );
           })}

@@ -20,14 +20,23 @@ const AuthForm = ({ isLogin }) => {
     e.preventDefault();
     setError('');
     setSuccessMessage('');
+    
     try {
       const response = await axios.post(
         `http://localhost:5000/api/${isLogin ? 'login' : 'register'}`,
         { username, password }
       );
+  
       if (isLogin) {
-        localStorage.setItem('token', response.data.token);
+        const token = response.data.token;
+        
+        if (!token) {
+          throw new Error("No token received. Check backend response.");
+        }
+  
+        localStorage.setItem('token', token); // Store token
         setSuccessMessage('Login successful!');
+        navigate('/Dashpourt'); // Redirect to Dashboard
       } else {
         setSuccessMessage('Registration successful! Please login.');
         navigate('/login');
@@ -36,11 +45,7 @@ const AuthForm = ({ isLogin }) => {
       setError(err.response?.data?.message || 'An error occurred.');
     }
   };
-
-  const handleProceed = () => {
-    navigate('/jobs');
-  };
-
+  
   return (
     <div className="max-w-md mx-auto mt-10 p-6 bg-white rounded shadow">
       <h2 className="text-2xl font-semibold mb-4 text-center">
